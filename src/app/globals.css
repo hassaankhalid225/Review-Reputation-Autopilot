@@ -1,26 +1,215 @@
 @import "tailwindcss";
 
+/* Class-based dark mode (next-themes adds `.dark` to <html>) */
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================================
+   DESIGN TOKENS  —  see Docs/DESIGN_SYSTEM.md
+   Semantic CSS variables. Components reference roles, never raw hex.
+   ========================================================================== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand — indigo → violet */
+  --brand-50: #eef2ff;  --brand-100: #e0e7ff; --brand-200: #c7d2fe;
+  --brand-300: #a5b4fc; --brand-400: #818cf8; --brand-500: #6366f1;
+  --brand-600: #4f46e5; --brand-700: #4338ca; --brand-800: #3730a3; --brand-900: #312e81;
+
+  /* Neutrals */
+  --gray-0: #ffffff;  --gray-50: #fafafa; --gray-100: #f5f5f5; --gray-200: #e5e5e5;
+  --gray-300: #d4d4d4; --gray-400: #a3a3a3; --gray-500: #737373; --gray-600: #525252;
+  --gray-700: #404040; --gray-800: #262626; --gray-900: #171717; --gray-950: #0a0a0a;
+
+  /* Semantic surfaces */
+  --background: var(--gray-50);
+  --surface: var(--gray-0);
+  --surface-2: var(--gray-100);
+  --surface-hover: var(--gray-100);
+  --border: var(--gray-200);
+  --border-strong: var(--gray-300);
+  --ring: var(--brand-500);
+
+  /* Text */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-tertiary: var(--gray-400);
+  --text-on-brand: #ffffff;
+
+  /* Brand role */
+  --primary: var(--brand-600);
+  --primary-hover: var(--brand-700);
+  --primary-fg: #ffffff;
+
+  /* Accents */
+  --success: #10b981; --success-bg: #ecfdf5; --success-fg: #047857;
+  --warning: #f59e0b; --warning-bg: #fffbeb; --warning-fg: #b45309;
+  --danger: #ef4444;  --danger-bg: #fef2f2;  --danger-fg: #b91c1c;
+  --info: #3b82f6;    --info-bg: #eff6ff;     --info-fg: #1d4ed8;
+  --star: #f5a623;
+
+  /* Radius */
+  --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 20px; --radius-2xl: 24px;
+
+  /* Elevation */
+  --shadow-xs: 0 1px 2px rgba(16,24,40,.05);
+  --shadow-sm: 0 1px 3px rgba(16,24,40,.08), 0 1px 2px rgba(16,24,40,.04);
+  --shadow-md: 0 4px 12px rgba(16,24,40,.08), 0 2px 4px rgba(16,24,40,.04);
+  --shadow-lg: 0 12px 32px rgba(16,24,40,.10), 0 4px 8px rgba(16,24,40,.04);
+  --shadow-xl: 0 24px 64px rgba(16,24,40,.14);
 }
 
+.dark {
+  --background: var(--gray-950);
+  --surface: #111113;
+  --surface-2: #18181b;
+  --surface-hover: #1c1c1f;
+  --border: #27272a;
+  --border-strong: #3f3f46;
+
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+
+  --primary: var(--brand-500);
+  --primary-hover: var(--brand-400);
+
+  --success-bg: #052e23; --success-fg: #34d399;
+  --warning-bg: #2a1f05; --warning-fg: #fbbf24;
+  --danger-bg: #2a0a0a;  --danger-fg: #f87171;
+  --info-bg: #0a1a2a;     --info-fg: #60a5fa;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.4);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.5), 0 1px 2px rgba(0,0,0,.4);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.5), 0 2px 4px rgba(0,0,0,.4);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.6), 0 4px 8px rgba(0,0,0,.4);
+  --shadow-xl: 0 24px 64px rgba(0,0,0,.7);
+}
+
+/* ============================================================================
+   TAILWIND THEME MAPPING  —  exposes tokens as utilities (bg-surface, text-text-primary…)
+   ========================================================================== */
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ring: var(--ring);
+
+  --color-foreground: var(--text-primary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-fg);
+
+  --color-brand-50: var(--brand-50);   --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200); --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400); --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600); --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800); --color-brand-900: var(--brand-900);
+
+  --color-success: var(--success); --color-success-bg: var(--success-bg); --color-success-fg: var(--success-fg);
+  --color-warning: var(--warning); --color-warning-bg: var(--warning-bg); --color-warning-fg: var(--warning-fg);
+  --color-danger: var(--danger);   --color-danger-bg: var(--danger-bg);   --color-danger-fg: var(--danger-fg);
+  --color-info: var(--info);        --color-info-bg: var(--info-bg);        --color-info-fg: var(--info-fg);
+  --color-star: var(--star);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(.32, .72, 0, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================================================
+   BASE
+   ========================================================================== */
+* {
+  border-color: var(--border);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tabular numerals for metrics */
+.tabular-nums { font-variant-numeric: tabular-nums; }
+
+/* Premium focus ring */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Selection */
+::selection { background: var(--brand-200); color: var(--brand-900); }
+.dark ::selection { background: var(--brand-700); color: #fff; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; border: 2px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-400); background-clip: content-box; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Popover/menu entrance */
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.96) translateY(-2px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Shimmer for skeletons */
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+.skeleton-shimmer { position: relative; overflow: hidden; }
+.skeleton-shimmer::after {
+  content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+  animation: shimmer 1.6s infinite;
+}
+
+/* Subtle grid background utility for hero sections */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--border) 60%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--border) 60%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Radial fade mask for decorative layers */
+.mask-radial-faded {
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
 }

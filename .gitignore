@@ -33,6 +33,10 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# supabase local CLI state (contains linked-project ref + pooler connection string)
+supabase/.temp/
+supabase/.branches/
+
 # vercel
 .vercel
 

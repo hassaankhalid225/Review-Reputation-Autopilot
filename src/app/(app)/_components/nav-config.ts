@@ -7,6 +7,9 @@ import {
   BellRing,
   Settings,
   CreditCard,
+  Blocks,
+  TrendingUp,
+  BarChart3,
 } from "lucide-react";
 
 export interface NavItem {
@@ -22,9 +25,12 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: "Requests", href: "/app/requests", icon: Send },
   { label: "Customers", href: "/app/customers", icon: Users },
   { label: "Alerts", href: "/app/alerts", icon: BellRing, badge: "alerts" },
+  { label: "Analytics", href: "/app/analytics", icon: BarChart3 },
+  { label: "Grow", href: "/app/grow", icon: TrendingUp },
 ];
 
 export const SECONDARY_NAV: NavItem[] = [
+  { label: "Integrations", href: "/app/integrations", icon: Blocks },
   { label: "Billing", href: "/app/billing", icon: CreditCard },
   { label: "Settings", href: "/app/settings", icon: Settings },
 ];

@@ -52,6 +52,16 @@ import type {
 } from "@/features/billing/application/billing.usecases";
 import type { GoogleAccountPort, GoogleLocationRepository } from "@/features/google-locations/domain/google.ports";
 import type { ConnectGoogleUseCase } from "@/features/google-locations/application/connect-google.usecase";
+import type {
+  ReviewSourceProviderRegistry,
+  ReviewSourceRepository,
+} from "@/features/integrations/domain/integrations.ports";
+import type { ListSourcesUseCase } from "@/features/integrations/application/list-sources.usecase";
+import type { ConnectSourceUseCase } from "@/features/integrations/application/connect-source.usecase";
+import type { DisconnectSourceUseCase } from "@/features/integrations/application/disconnect-source.usecase";
+import type { WidgetRepository, WidgetSettingsRepository } from "@/features/widget/domain/widget.ports";
+import type { GetWidgetUseCase } from "@/features/widget/application/get-widget.usecase";
+import type { SaveWidgetSettingsUseCase } from "@/features/widget/application/save-widget-settings.usecase";
 
 export const TOKENS = {
   // cross-cutting
@@ -89,6 +99,7 @@ export const TOKENS = {
   // review-requests
   ReviewRequestRepository: token<ReviewRequestRepository>("ReviewRequestRepository"),
   MessageSender: token<MessageSender>("MessageSender"),
+  EmailSender: token<MessageSender>("EmailSender"),
   SendRequestUseCase: token<SendRequestUseCase>("SendRequestUseCase"),
   ListRequestsUseCase: token<ListRequestsUseCase>("ListRequestsUseCase"),
   ResolveLinkUseCase: token<ResolveLinkUseCase>("ResolveLinkUseCase"),
@@ -118,4 +129,17 @@ export const TOKENS = {
   GoogleAccountPort: token<GoogleAccountPort>("GoogleAccountPort"),
   GoogleLocationRepository: token<GoogleLocationRepository>("GoogleLocationRepository"),
   ConnectGoogleUseCase: token<ConnectGoogleUseCase>("ConnectGoogleUseCase"),
+
+  // integrations (multi-platform review sources)
+  ReviewSourceRepository: token<ReviewSourceRepository>("ReviewSourceRepository"),
+  ReviewSourceProviderRegistry: token<ReviewSourceProviderRegistry>("ReviewSourceProviderRegistry"),
+  ListSourcesUseCase: token<ListSourcesUseCase>("ListSourcesUseCase"),
+  ConnectSourceUseCase: token<ConnectSourceUseCase>("ConnectSourceUseCase"),
+  DisconnectSourceUseCase: token<DisconnectSourceUseCase>("DisconnectSourceUseCase"),
+
+  // widget (public website review widget)
+  WidgetRepository: token<WidgetRepository>("WidgetRepository"),
+  GetWidgetUseCase: token<GetWidgetUseCase>("GetWidgetUseCase"),
+  WidgetSettingsRepository: token<WidgetSettingsRepository>("WidgetSettingsRepository"),
+  SaveWidgetSettingsUseCase: token<SaveWidgetSettingsUseCase>("SaveWidgetSettingsUseCase"),
 } as const;

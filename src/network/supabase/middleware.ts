@@ -14,6 +14,7 @@ const PUBLIC_PATHS = [
   "/reset-password",
   "/pricing",
   "/r/",
+  "/w/", // public embeddable review widget (no session — scoped by business id)
   "/auth/",
   "/api/stripe/", // webhooks: no user session, verified by signature
 ];

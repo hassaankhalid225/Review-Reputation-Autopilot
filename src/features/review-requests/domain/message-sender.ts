@@ -7,9 +7,11 @@ import type { Result } from "@/core/result/result";
 import type { AppError } from "@/core/errors/app-error";
 
 export interface OutboundMessage {
-  to: string; // E.164
+  to: string; // E.164 phone, or an email address for the email channel
   body: string;
-  channel: "whatsapp" | "sms";
+  channel: "whatsapp" | "sms" | "email";
+  /** Subject line (email channel only). */
+  subject?: string;
 }
 
 export interface SendResult {

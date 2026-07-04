@@ -12,8 +12,12 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type MembershipRole = "owner" | "staff";
 export type BrandTone = "friendly" | "formal" | "short";
 export type LocationStatus = "connected" | "revoked" | "error";
+export type Platform = "google" | "facebook" | "instagram" | "yelp" | "tripadvisor" | "trustpilot";
+export type SourceStatus = "connected" | "pending" | "revoked" | "error";
+export type WidgetTheme = "auto" | "light" | "dark";
+export type WidgetLayout = "grid" | "carousel" | "list";
 export type CustomerSource = "manual" | "csv" | "pos";
-export type RequestChannel = "whatsapp" | "sms";
+export type RequestChannel = "whatsapp" | "sms" | "email";
 export type RequestStatus = "queued" | "sent" | "delivered" | "clicked" | "reviewed" | "failed";
 export type ReplyStatus = "none" | "drafted" | "posted" | "failed";
 export type DraftStatus = "draft" | "edited" | "posted";
@@ -139,12 +143,88 @@ export interface Database {
           status?: LocationStatus | null;
         }
       >;
+      review_sources: Table<
+        {
+          id: string;
+          business_id: string;
+          platform: Platform;
+          external_id: string | null;
+          display_name: string | null;
+          review_link: string | null;
+          profile_url: string | null;
+          credentials_encrypted: string | null;
+          avg_rating: number | null;
+          review_count: number | null;
+          status: SourceStatus | null;
+          last_synced_at: string | null;
+          created_at: string | null;
+          updated_at: string | null;
+        },
+        {
+          id?: string;
+          business_id: string;
+          platform: Platform;
+          external_id?: string | null;
+          display_name?: string | null;
+          review_link?: string | null;
+          profile_url?: string | null;
+          credentials_encrypted?: string | null;
+          avg_rating?: number | null;
+          review_count?: number | null;
+          status?: SourceStatus | null;
+          last_synced_at?: string | null;
+        },
+        {
+          external_id?: string | null;
+          display_name?: string | null;
+          review_link?: string | null;
+          profile_url?: string | null;
+          credentials_encrypted?: string | null;
+          avg_rating?: number | null;
+          review_count?: number | null;
+          status?: SourceStatus | null;
+          last_synced_at?: string | null;
+        }
+      >;
+      widget_settings: Table<
+        {
+          business_id: string;
+          enabled: boolean | null;
+          min_rating: number | null;
+          theme: WidgetTheme | null;
+          layout: WidgetLayout | null;
+          accent: string | null;
+          headline: string | null;
+          max_reviews: number | null;
+          updated_at: string | null;
+        },
+        {
+          business_id: string;
+          enabled?: boolean | null;
+          min_rating?: number | null;
+          theme?: WidgetTheme | null;
+          layout?: WidgetLayout | null;
+          accent?: string | null;
+          headline?: string | null;
+          max_reviews?: number | null;
+        },
+        {
+          enabled?: boolean | null;
+          min_rating?: number | null;
+          theme?: WidgetTheme | null;
+          layout?: WidgetLayout | null;
+          accent?: string | null;
+          headline?: string | null;
+          max_reviews?: number | null;
+        }
+      >;
       customers: Table<
         {
           id: string;
           business_id: string;
           name: string | null;
           phone: string;
+          email: string | null;
           tags: string[] | null;
           consent: boolean | null;
           source: CustomerSource | null;
@@ -157,6 +237,7 @@ export interface Database {
           business_id: string;
           name?: string | null;
           phone: string;
+          email?: string | null;
           tags?: string[] | null;
           consent?: boolean | null;
           source?: CustomerSource | null;
@@ -166,6 +247,7 @@ export interface Database {
         {
           name?: string | null;
           phone?: string;
+          email?: string | null;
           tags?: string[] | null;
           consent?: boolean | null;
           source?: CustomerSource | null;

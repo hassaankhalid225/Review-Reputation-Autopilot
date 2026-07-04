@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/shared/ui/card";
@@ -18,7 +18,6 @@ const STEPS = ["Business", "Connect Google", "Done"];
 const variants = {
   enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 24 : -24 }),
   center: { opacity: 1, x: 0 },
-  exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -24 : 24 }),
 };
 
 export function OnboardingWizard() {
@@ -60,21 +59,21 @@ export function OnboardingWizard() {
 
       <Card className="overflow-hidden">
         <CardContent className="p-6 sm:p-8">
-          <AnimatePresence mode="wait" custom={dir} initial={false}>
-            <motion.div
-              key={step}
-              custom={dir}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.22, ease: [0.32, 0.72, 0, 1] }}
-            >
-              {step === 0 && <StepBusiness value={business} onChange={setBusiness} />}
-              {step === 1 && <StepConnectGoogle connected={connected} onConnect={() => setConnected(true)} />}
-              {step === 2 && <StepDone businessName={business.name} />}
-            </motion.div>
-          </AnimatePresence>
+          {/* A single keyed motion.div (no AnimatePresence): it re-mounts and
+              plays the enter animation only when `step` changes — NOT on every
+              keystroke — so controlled inputs keep their value and focus. */}
+          <motion.div
+            key={step}
+            custom={dir}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            transition={{ duration: 0.22, ease: [0.32, 0.72, 0, 1] }}
+          >
+            {step === 0 && <StepBusiness value={business} onChange={setBusiness} />}
+            {step === 1 && <StepConnectGoogle connected={connected} onConnect={() => setConnected(true)} />}
+            {step === 2 && <StepDone businessName={business.name} />}
+          </motion.div>
         </CardContent>
       </Card>
 

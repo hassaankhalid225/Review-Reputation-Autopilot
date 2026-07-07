@@ -11,6 +11,33 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 
 export type MembershipRole = "owner" | "staff";
 export type BrandTone = "friendly" | "formal" | "short";
+
+/** Social handles/links stored on `businesses.socials` (jsonb). All optional. */
+export interface SocialLinks {
+  instagram?: string;
+  facebook?: string;
+  tiktok?: string;
+  youtube?: string;
+  linkedin?: string;
+  twitter?: string;
+}
+
+export type ReplyTemplateTrigger = "any" | "positive" | "mixed" | "negative";
+
+/** Owner-authored reply template stored in `businesses.reply_templates` (jsonb). */
+export interface ReplyTemplateRow {
+  id: string;
+  title: string;
+  trigger: ReplyTemplateTrigger;
+  body: string;
+}
+
+/** Owner-authored brand fact stored in `businesses.brand_facts` (jsonb). */
+export interface BrandFactRow {
+  id: string;
+  label: string;
+  value: string;
+}
 export type LocationStatus = "connected" | "revoked" | "error";
 export type Platform = "google" | "facebook" | "instagram" | "yelp" | "tripadvisor" | "trustpilot";
 export type SourceStatus = "connected" | "pending" | "revoked" | "error";
@@ -72,6 +99,25 @@ export interface Database {
           brand_tone: BrandTone | null;
           languages: string[] | null;
           quiet_hours: string | null;
+          tagline: string | null;
+          description: string | null;
+          website: string | null;
+          logo_url: string | null;
+          brand_color: string | null;
+          public_email: string | null;
+          phone: string | null;
+          whatsapp: string | null;
+          address: string | null;
+          socials: SocialLinks | null;
+          ai_signature: string | null;
+          ai_context: string | null;
+          ai_avoid: string | null;
+          reply_language: string | null;
+          reply_templates: ReplyTemplateRow[] | null;
+          brand_facts: BrandFactRow[] | null;
+          autopilot_enabled: boolean | null;
+          autopilot_autopost: boolean | null;
+          autopilot_min_rating: number | null;
           created_at: string | null;
           updated_at: string | null;
         },
@@ -87,6 +133,25 @@ export interface Database {
           brand_tone?: BrandTone | null;
           languages?: string[] | null;
           quiet_hours?: string | null;
+          tagline?: string | null;
+          description?: string | null;
+          website?: string | null;
+          logo_url?: string | null;
+          brand_color?: string | null;
+          public_email?: string | null;
+          phone?: string | null;
+          whatsapp?: string | null;
+          address?: string | null;
+          socials?: SocialLinks | null;
+          ai_signature?: string | null;
+          ai_context?: string | null;
+          ai_avoid?: string | null;
+          reply_language?: string | null;
+          reply_templates?: ReplyTemplateRow[] | null;
+          brand_facts?: BrandFactRow[] | null;
+          autopilot_enabled?: boolean | null;
+          autopilot_autopost?: boolean | null;
+          autopilot_min_rating?: number | null;
         },
         {
           name?: string;
@@ -98,6 +163,25 @@ export interface Database {
           brand_tone?: BrandTone | null;
           languages?: string[] | null;
           quiet_hours?: string | null;
+          tagline?: string | null;
+          description?: string | null;
+          website?: string | null;
+          logo_url?: string | null;
+          brand_color?: string | null;
+          public_email?: string | null;
+          phone?: string | null;
+          whatsapp?: string | null;
+          address?: string | null;
+          socials?: SocialLinks | null;
+          ai_signature?: string | null;
+          ai_context?: string | null;
+          ai_avoid?: string | null;
+          reply_language?: string | null;
+          reply_templates?: ReplyTemplateRow[] | null;
+          brand_facts?: BrandFactRow[] | null;
+          autopilot_enabled?: boolean | null;
+          autopilot_autopost?: boolean | null;
+          autopilot_min_rating?: number | null;
         }
       >;
       memberships: Table<

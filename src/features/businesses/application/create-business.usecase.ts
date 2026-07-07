@@ -26,7 +26,7 @@ export class CreateBusinessUseCase {
     if (entity.isErr()) return err(entity.error);
 
     const saved = await this.repo.create(entity.value);
-    if (saved.isErr()) return saved;
+    if (saved.isErr()) return err(saved.error);
 
     await this.audit.record({
       businessId: saved.value.id,

@@ -2,7 +2,7 @@
 import type { LucideIcon } from "lucide-react";
 import { MapPin, ThumbsUp, Camera, Utensils, Plane, ShieldCheck } from "lucide-react";
 import type { Platform } from "@/network/supabase/types";
-import { PLATFORM_CAPABILITIES } from "../domain/platform";
+import { PLATFORM_CAPABILITIES, type ConnectMethod } from "../domain/platform";
 
 export interface PlatformMeta {
   platform: Platform;
@@ -11,10 +11,10 @@ export interface PlatformMeta {
   icon: LucideIcon;
   /** Brand accent (hex) used for the icon chip. */
   accent: string;
-  /** Placeholder shown in the "paste your link" field. */
+  /** Placeholder shown in the connect input. */
   linkPlaceholder: string;
-  /** How to connect (from domain capabilities). */
-  method: "oauth" | "link";
+  /** Intended connect method (runtime truth comes from PlatformStatus). */
+  method: ConnectMethod;
 }
 
 export const PLATFORM_CATALOG: Record<Platform, PlatformMeta> = {

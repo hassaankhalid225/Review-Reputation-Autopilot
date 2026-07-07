@@ -52,7 +52,10 @@ export class SupabaseReviewSourceRepository implements ReviewSourceRepository {
         review_link: conn.reviewLink,
         profile_url: conn.profileUrl,
         credentials_encrypted,
+        avg_rating: conn.avgRating ?? null,
+        review_count: conn.reviewCount ?? 0,
         status: "connected",
+        last_synced_at: conn.reviews && conn.reviews.length > 0 ? new Date().toISOString() : null,
       },
       { onConflict: "business_id,platform" },
     );

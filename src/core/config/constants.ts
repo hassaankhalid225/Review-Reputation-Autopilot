@@ -68,5 +68,54 @@ export const BUSINESS_CATEGORIES = [
   "Other",
 ] as const;
 
+/** Currencies offered in Settings (code + symbol + label). */
+export const CURRENCIES = [
+  { code: "PKR", symbol: "₨", label: "Pakistani Rupee" },
+  { code: "USD", symbol: "$", label: "US Dollar" },
+  { code: "EUR", symbol: "€", label: "Euro" },
+  { code: "GBP", symbol: "£", label: "British Pound" },
+  { code: "AED", symbol: "د.إ", label: "UAE Dirham" },
+  { code: "SAR", symbol: "﷼", label: "Saudi Riyal" },
+  { code: "INR", symbol: "₹", label: "Indian Rupee" },
+  { code: "CAD", symbol: "C$", label: "Canadian Dollar" },
+  { code: "AUD", symbol: "A$", label: "Australian Dollar" },
+] as const;
+
+/** A pragmatic timezone shortlist for the target markets. */
+export const TIMEZONES = [
+  "Asia/Karachi",
+  "Asia/Dubai",
+  "Asia/Riyadh",
+  "Asia/Kolkata",
+  "Europe/London",
+  "Europe/Berlin",
+  "America/New_York",
+  "America/Chicago",
+  "America/Los_Angeles",
+  "Australia/Sydney",
+  "UTC",
+] as const;
+
+/** Languages an owner can serve customers / draft replies in. */
+export const LANGUAGES = [
+  { code: "en", label: "English" },
+  { code: "ur", label: "Urdu" },
+  { code: "ar", label: "Arabic" },
+  { code: "hi", label: "Hindi" },
+  { code: "es", label: "Spanish" },
+  { code: "fr", label: "French" },
+  { code: "de", label: "German" },
+] as const;
+
+/** Which social platforms Settings lets an owner link. */
+export const SOCIAL_PLATFORMS = [
+  { key: "instagram", label: "Instagram", placeholder: "instagram.com/yourbrand" },
+  { key: "facebook", label: "Facebook", placeholder: "facebook.com/yourbrand" },
+  { key: "tiktok", label: "TikTok", placeholder: "tiktok.com/@yourbrand" },
+  { key: "youtube", label: "YouTube", placeholder: "youtube.com/@yourbrand" },
+  { key: "linkedin", label: "LinkedIn", placeholder: "linkedin.com/company/yourbrand" },
+  { key: "twitter", label: "X (Twitter)", placeholder: "x.com/yourbrand" },
+] as const;
+
 /** Review request anti-spam window (days). */
 export const REQUEST_COOLDOWN_DAYS = 30;

@@ -29,6 +29,12 @@ const serverSchema = z.object({
   /** Resend API key + verified from-address for email review requests. */
   RESEND_API_KEY: z.string().optional(),
   EMAIL_FROM: z.string().optional(),
+  /** Review-platform API credentials (each unlocks that platform's real connect). */
+  FACEBOOK_APP_ID: z.string().optional(),
+  FACEBOOK_APP_SECRET: z.string().optional(),
+  YELP_API_KEY: z.string().optional(),
+  TRIPADVISOR_API_KEY: z.string().optional(),
+  TRUSTPILOT_API_KEY: z.string().optional(),
   STRIPE_SECRET_KEY: z.string().optional(),
   STRIPE_WEBHOOK_SECRET: z.string().optional(),
 });
@@ -80,6 +86,11 @@ export function getServerConfig() {
     TWILIO_FROM: process.env.TWILIO_FROM,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     EMAIL_FROM: process.env.EMAIL_FROM,
+    FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
+    FACEBOOK_APP_SECRET: process.env.FACEBOOK_APP_SECRET,
+    YELP_API_KEY: process.env.YELP_API_KEY,
+    TRIPADVISOR_API_KEY: process.env.TRIPADVISOR_API_KEY,
+    TRUSTPILOT_API_KEY: process.env.TRUSTPILOT_API_KEY,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
   });

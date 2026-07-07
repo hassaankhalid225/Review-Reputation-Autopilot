@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { Building2 } from "lucide-react";
 import { getSessionUser } from "@/features/auth/presentation/session";
 import { getTenantContext } from "@/features/businesses/presentation/active-business";
-import { BrandVoiceForm } from "@/features/businesses/presentation/components/brand-voice-form";
+import { BrandProfileForm } from "@/features/businesses/presentation/components/brand-profile-form";
 import { PageHeader } from "@/shared/ui/patterns/page-header";
+import { EmptyState } from "@/shared/ui/patterns/empty-state";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/shared/ui/card";
 import { Field } from "@/shared/ui/label";
 import { Input } from "@/shared/ui/input";
@@ -15,12 +17,12 @@ export default async function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Settings" description="Manage your profile, brand voice, and preferences." />
+      <PageHeader title="Settings" description="Your account and brand details." />
 
       <Card>
         <CardHeader>
-          <CardTitle>Profile</CardTitle>
-          <CardDescription>Your personal account details.</CardDescription>
+          <CardTitle>Your account</CardTitle>
+          <CardDescription>Personal details for your login.</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 sm:grid-cols-2">
           <Field label="Full name">
@@ -34,14 +36,21 @@ export default async function SettingsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Brand voice</CardTitle>
-          <CardDescription>How AI drafts your review replies.</CardDescription>
+          <CardTitle>Brand</CardTitle>
+          <CardDescription>
+            Your business details, contact info, and brand identity. Reply voice and automation live
+            on the AI Autopilot page.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {active ? (
-            <BrandVoiceForm businessId={active.id} current={active.brandTone} />
+            <BrandProfileForm businessId={active.id} business={active} />
           ) : (
-            <p className="text-sm text-text-tertiary">Create a business to set your brand voice.</p>
+            <EmptyState
+              icon={<Building2 />}
+              title="No business yet"
+              description="Create a business to set up your brand details."
+            />
           )}
         </CardContent>
       </Card>

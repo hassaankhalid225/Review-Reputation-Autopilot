@@ -9,7 +9,7 @@ import { type AppError, NotFoundError, ProviderError } from "@/core/errors/app-e
 import type { AuditLogger } from "@/core/audit/audit-logger";
 import type { ReviewRepository } from "@/features/reviews/domain/review.repository";
 import { type ReviewView, toReviewView } from "@/features/reviews/application/review.dto";
-import type { ReplyDrafter, BrandTone } from "../domain/reply-drafter";
+import type { ReplyDrafter, BrandTone, BrandContext } from "../domain/reply-drafter";
 import type { AiDraftRepository } from "../domain/ai-draft.repository";
 
 export class GenerateDraftUseCase {
@@ -26,6 +26,7 @@ export class GenerateDraftUseCase {
     reviewId: string,
     businessName: string,
     brandTone: BrandTone,
+    brand?: BrandContext,
   ): Promise<Result<ReviewView, AppError>> {
     if (!this.drafter.isConfigured()) {
       return err(new ProviderError("AI replies aren't configured yet. Add an Anthropic API key."));
@@ -42,6 +43,7 @@ export class GenerateDraftUseCase {
       rating: review.rating,
       reviewText: review.text,
       authorName: review.authorName,
+      brand,
     });
     if (drafted.isErr()) return err(drafted.error);
 

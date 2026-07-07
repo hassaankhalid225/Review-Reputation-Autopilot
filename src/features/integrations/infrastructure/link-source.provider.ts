@@ -1,17 +1,14 @@
 /**
- * ADAPTER: LinkSourceProvider — the "paste your public review link" connect
- * method used by platforms without an ingest API wired yet (Yelp, TripAdvisor,
- * Trustpilot, and Facebook/Instagram until their OAuth apps are approved).
- *
- * It validates + normalizes the URL so requests, the widget and QR posters can
- * point customers straight at the business's listing. When a platform's live
- * API keys are added, swap this for a real OAuth/api adapter — the port is the
- * same, so nothing upstream changes.
+ * ADAPTER: LinkSourceProvider — the "paste your public review link" method,
+ * used for Instagram (no reviews API) and as the fallback for any platform whose
+ * live API keys aren't set yet. It validates + normalizes the URL so requests,
+ * the widget and QR posters can point customers at the listing.
  */
 import { Result, ok, err } from "@/core/result/result";
 import { type AppError, ValidationError } from "@/core/errors/app-error";
-import type { Platform } from "@/network/supabase/types";
+import type { Platform } from "../domain/platform";
 import type {
+  ConnectMethod,
   ConnectedSource,
   ProviderConnectInput,
   ReviewSourceProvider,
@@ -28,6 +25,7 @@ const EXPECTED_HOSTS: Record<Platform, string[]> = {
 };
 
 export class LinkSourceProvider implements ReviewSourceProvider {
+  readonly method: ConnectMethod = "link";
   constructor(readonly platform: Platform) {}
 
   /** Link providers have no ingest API — reviews are collected via the link. */
@@ -36,7 +34,7 @@ export class LinkSourceProvider implements ReviewSourceProvider {
   }
 
   async connect(input: ProviderConnectInput): Promise<Result<ConnectedSource, AppError>> {
-    const raw = (input.reviewLink ?? input.profileUrl ?? "").trim();
+    const raw = (input.reviewLink ?? input.query ?? input.profileUrl ?? "").trim();
     if (!raw) {
       return err(new ValidationError("Paste your public review link to connect this platform."));
     }

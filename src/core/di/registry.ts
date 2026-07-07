@@ -63,10 +63,13 @@ import { GoogleReplyPoster } from "@/features/google-locations/infrastructure/go
 import { ConnectGoogleUseCase } from "@/features/google-locations/application/connect-google.usecase";
 import { isGoogleConfigured } from "@/network/google/oauth";
 import { SupabaseReviewSourceRepository } from "@/features/integrations/infrastructure/supabase-review-source.repository";
+import { SupabaseReviewIngestionRepository } from "@/features/integrations/infrastructure/supabase-review-ingestion.repository";
 import { DefaultProviderRegistry } from "@/features/integrations/infrastructure/provider-registry";
 import { ListSourcesUseCase } from "@/features/integrations/application/list-sources.usecase";
 import { ConnectSourceUseCase } from "@/features/integrations/application/connect-source.usecase";
 import { DisconnectSourceUseCase } from "@/features/integrations/application/disconnect-source.usecase";
+import { CompleteOAuthUseCase } from "@/features/integrations/application/complete-oauth.usecase";
+import { GetPlatformStatusesUseCase } from "@/features/integrations/application/platform-status.usecase";
 import { SupabaseWidgetRepository } from "@/features/widget/infrastructure/supabase-widget.repository";
 import { SupabaseWidgetSettingsRepository } from "@/features/widget/infrastructure/supabase-widget-settings.repository";
 import { GetWidgetUseCase } from "@/features/widget/application/get-widget.usecase";
@@ -270,12 +273,17 @@ export function ensureRegistered(): void {
 
   // ── integrations (multi-platform review sources) ──────────────────────────
   register(TOKENS.ReviewSourceRepository, (ctx) => new SupabaseReviewSourceRepository(ctx.db));
-  // Every platform is link-based today; bind a live API/OAuth provider here per
-  // platform as its adapter ships (the port is unchanged, so use cases don't move).
+  register(TOKENS.ReviewIngestionRepository, (ctx) => new SupabaseReviewIngestionRepository(ctx.db));
+  // Binds the real per-platform provider (Facebook OAuth; Yelp/TripAdvisor/
+  // Trustpilot API) when its credentials are configured, else a link fallback.
   register(TOKENS.ReviewSourceProviderRegistry, () => new DefaultProviderRegistry());
   register(
     TOKENS.ListSourcesUseCase,
     (ctx, resolve) => new ListSourcesUseCase(resolve(TOKENS.ReviewSourceRepository)),
+  );
+  register(
+    TOKENS.GetPlatformStatusesUseCase,
+    (ctx, resolve) => new GetPlatformStatusesUseCase(resolve(TOKENS.ReviewSourceProviderRegistry)),
   );
   register(
     TOKENS.ConnectSourceUseCase,
@@ -283,7 +291,16 @@ export function ensureRegistered(): void {
       new ConnectSourceUseCase(
         resolve(TOKENS.ReviewSourceProviderRegistry),
         resolve(TOKENS.ReviewSourceRepository),
+        resolve(TOKENS.ReviewIngestionRepository),
         resolve(TOKENS.AuditLogger),
+      ),
+  );
+  register(
+    TOKENS.CompleteOAuthUseCase,
+    (ctx, resolve) =>
+      new CompleteOAuthUseCase(
+        resolve(TOKENS.ReviewSourceProviderRegistry),
+        resolve(TOKENS.ConnectSourceUseCase),
       ),
   );
   register(

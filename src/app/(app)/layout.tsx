@@ -21,11 +21,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   if (!active) {
     return (
-      <div className="flex min-h-dvh">
+      <div className="flex h-dvh overflow-hidden">
         <Sidebar alertCount={0} />
         <div className="flex min-w-0 flex-1 flex-col">
           <Topbar user={topbarUser} businesses={[]} activeId={null} />
-          <main className="flex-1 px-4 py-6 pb-24 sm:px-6 lg:px-8 lg:pb-8">
+          <main className="flex-1 overflow-y-auto px-4 py-6 pb-24 sm:px-6 lg:px-8 lg:pb-8">
             <div className="mx-auto w-full max-w-6xl">
               <CompleteSetupGate />
             </div>
@@ -41,7 +41,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const alertCount = alertCountRes.isOk() ? alertCountRes.value : 0;
 
   return (
-    <div className="flex min-h-dvh">
+    <div className="flex h-dvh overflow-hidden">
       <Sidebar alertCount={alertCount} />
       <div className="flex min-w-0 flex-1 flex-col">
         <Topbar
@@ -49,7 +49,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           businesses={businesses.map((b) => ({ id: b.id, name: b.name }))}
           activeId={active.id}
         />
-        <main className="flex-1 px-4 py-6 pb-24 sm:px-6 lg:px-8 lg:pb-8">
+        <main className="flex-1 overflow-y-auto px-4 py-6 pb-24 sm:px-6 lg:px-8 lg:pb-8">
           <div className="mx-auto w-full max-w-6xl">{children}</div>
         </main>
         <MobileNav />

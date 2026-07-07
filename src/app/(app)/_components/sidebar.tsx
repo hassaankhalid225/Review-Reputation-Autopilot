@@ -47,7 +47,7 @@ export function Sidebar({ alertCount = 0 }: { alertCount?: number }) {
           <Logo />
         </Link>
       </div>
-      <nav className="flex flex-1 flex-col gap-1 px-3 py-2">
+      <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-2">
         {PRIMARY_NAV.map((item) => (
           <NavLink key={item.href} item={item} alertCount={alertCount} />
         ))}

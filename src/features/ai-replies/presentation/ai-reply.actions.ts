@@ -34,6 +34,19 @@ export async function generateDraftAction(reviewId: unknown): Promise<ActionResu
     reviewId as string,
     active.name,
     active.brandTone,
+    {
+      description: active.description,
+      aiContext: active.aiContext,
+      aiAvoid: active.aiAvoid,
+      signature: active.aiSignature,
+      language: active.replyLanguage,
+      facts: active.brandFacts.map((f) => ({ label: f.label, value: f.value })),
+      templates: active.replyTemplates.map((t) => ({
+        title: t.title,
+        trigger: t.trigger,
+        body: t.body,
+      })),
+    },
   );
   if (result.isOk()) revalidatePath("/app/reviews");
   return toActionResult(result);

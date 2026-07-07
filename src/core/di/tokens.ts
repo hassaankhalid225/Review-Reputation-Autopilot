@@ -53,12 +53,15 @@ import type {
 import type { GoogleAccountPort, GoogleLocationRepository } from "@/features/google-locations/domain/google.ports";
 import type { ConnectGoogleUseCase } from "@/features/google-locations/application/connect-google.usecase";
 import type {
+  ReviewIngestionRepository,
   ReviewSourceProviderRegistry,
   ReviewSourceRepository,
 } from "@/features/integrations/domain/integrations.ports";
 import type { ListSourcesUseCase } from "@/features/integrations/application/list-sources.usecase";
 import type { ConnectSourceUseCase } from "@/features/integrations/application/connect-source.usecase";
 import type { DisconnectSourceUseCase } from "@/features/integrations/application/disconnect-source.usecase";
+import type { CompleteOAuthUseCase } from "@/features/integrations/application/complete-oauth.usecase";
+import type { GetPlatformStatusesUseCase } from "@/features/integrations/application/platform-status.usecase";
 import type { WidgetRepository, WidgetSettingsRepository } from "@/features/widget/domain/widget.ports";
 import type { GetWidgetUseCase } from "@/features/widget/application/get-widget.usecase";
 import type { SaveWidgetSettingsUseCase } from "@/features/widget/application/save-widget-settings.usecase";
@@ -133,9 +136,12 @@ export const TOKENS = {
   // integrations (multi-platform review sources)
   ReviewSourceRepository: token<ReviewSourceRepository>("ReviewSourceRepository"),
   ReviewSourceProviderRegistry: token<ReviewSourceProviderRegistry>("ReviewSourceProviderRegistry"),
+  ReviewIngestionRepository: token<ReviewIngestionRepository>("ReviewIngestionRepository"),
   ListSourcesUseCase: token<ListSourcesUseCase>("ListSourcesUseCase"),
   ConnectSourceUseCase: token<ConnectSourceUseCase>("ConnectSourceUseCase"),
   DisconnectSourceUseCase: token<DisconnectSourceUseCase>("DisconnectSourceUseCase"),
+  CompleteOAuthUseCase: token<CompleteOAuthUseCase>("CompleteOAuthUseCase"),
+  GetPlatformStatusesUseCase: token<GetPlatformStatusesUseCase>("GetPlatformStatusesUseCase"),
 
   // widget (public website review widget)
   WidgetRepository: token<WidgetRepository>("WidgetRepository"),

@@ -4,15 +4,37 @@
  */
 import type { Result } from "@/core/result/result";
 import type { AppError } from "@/core/errors/app-error";
-import type { Business, BrandTone } from "./business.entity";
+import type { Business, BrandTone, SocialLinks, ReplyTemplate, BrandFact } from "./business.entity";
 
 export interface UpdateBusinessPatch {
   name?: string;
   category?: string | null;
   city?: string | null;
   country?: string | null;
+  timezone?: string;
+  currency?: string;
   brandTone?: BrandTone;
   languages?: string[];
+  // Brand profile
+  tagline?: string | null;
+  description?: string | null;
+  website?: string | null;
+  logoUrl?: string | null;
+  brandColor?: string | null;
+  publicEmail?: string | null;
+  phone?: string | null;
+  whatsapp?: string | null;
+  address?: string | null;
+  socials?: SocialLinks;
+  aiSignature?: string | null;
+  aiContext?: string | null;
+  aiAvoid?: string | null;
+  replyLanguage?: string;
+  replyTemplates?: ReplyTemplate[];
+  brandFacts?: BrandFact[];
+  autopilotEnabled?: boolean;
+  autopilotAutoPost?: boolean;
+  autopilotMinRating?: number;
 }
 
 export interface BusinessRepository {
